@@ -24,6 +24,7 @@ namespace RuleService.APIProject.Controllers
             {
                 var list = await _tollFeeRepository.GetAll();
                 response.Data = list;
+                response.Success = true;
             }
             catch (Exception ex)
             {
@@ -41,6 +42,7 @@ namespace RuleService.APIProject.Controllers
             try
             {
                 response.Data = await _tollFeeRepository.GetById(id);
+                response.Success = true;
             }
             catch (Exception ex)
             {
@@ -59,6 +61,7 @@ namespace RuleService.APIProject.Controllers
             {
                 var model = await _tollFeeRepository.Add(newFee);
                 response.Data = model;
+                response.Success = true;
             }
             catch (Exception ex)
             {
@@ -67,7 +70,6 @@ namespace RuleService.APIProject.Controllers
                      = new List<string>() { ex.ToString() };
             }
             return response;
-
         }
 
         [HttpPut]
@@ -80,6 +82,7 @@ namespace RuleService.APIProject.Controllers
                 if (model != null)
                 {
                     response.Data = model;
+                    response.Success=true;
                 }
             }
             catch (Exception ex)
