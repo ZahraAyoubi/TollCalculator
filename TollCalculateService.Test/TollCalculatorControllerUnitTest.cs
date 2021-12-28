@@ -20,6 +20,7 @@ namespace TollCalculateService.Test
             _context = new Mock<ApplicationDbContext>();
             _repo = new TollCalculatorRepository(_context.Object);
         }
+
         [Fact]
         public void GetTollFee_Should_Calculate_Toll()
         {
@@ -36,6 +37,7 @@ namespace TollCalculateService.Test
 
             Assert.NotEqual(0, result);
         }
+
         [Fact]
         public void GetTollFee_Should_be_Toll_Free_For_Holidays()
         {
@@ -52,17 +54,18 @@ namespace TollCalculateService.Test
 
             Assert.Equal(0, result);
         }
+
         [Fact]
         public void GetTollFee_Should_be_Toll_Free_For_Special_Vehicle()
         {
             DateTime[] date = new DateTime[]
- {
+            {
 
                 new DateTime(2013, 10, 1, 8, 15, 0),
                 new DateTime(2013, 10, 1, 8, 30, 1),
                 new DateTime(2013, 10, 1, 8, 45, 2),
                 new DateTime(2013, 10, 1, 9, 15, 3),
-  };
+             };
 
             var result = _repo.GetTollFee(_emergency, date);
 
