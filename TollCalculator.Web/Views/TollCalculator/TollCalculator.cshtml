@@ -1,0 +1,27 @@
+﻿@model TollCalculator.Web.DTOs.TollFeeDto
+<form asp-action="TollCalculator">
+    <input asp-for="Id" hidden />
+    <br />
+<div class="container border p-3">
+        <h1 class="text-primary">Calculate Toll</h1>
+        <hr />
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-2">
+                <label asp-for="Names" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <select  asp-for="Names"  asp-items="Model.Names as List<SelectListItem>" class="form-control" />
+                <span asp-validation-for="Names" class="text-danger"></span>
+            </div>
+            <div class="col-5 offset-2">
+                <a asp-action="BackToList" class="btn-primary btn form-control ">Back to List</a>
+            </div>
+            <div class="col-5">
+                <input type="submit" value="Calculate" class="btn btn-info form-control" />
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+</form>
