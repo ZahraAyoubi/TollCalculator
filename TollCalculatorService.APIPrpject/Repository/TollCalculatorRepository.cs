@@ -7,6 +7,10 @@ namespace TollCalculatorService.APIPrpject.Repository
     public class TollCalculatorRepository : ITollCalculatorRepository
     {
         private ApplicationDbContext _dbContext;
+        private CostType costType;
+        private List<TollFee> tollFeeInfos;
+        private TollFee tollFee;
+        private List<VehicleType> vehicleType;
 
         public TollCalculatorRepository(ApplicationDbContext dbContext)
         {
@@ -43,23 +47,22 @@ namespace TollCalculatorService.APIPrpject.Repository
             if (IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
 
             var time = date.TimeOfDay;
-            var tollFeeInfo = _dbContext.TollFees.ToList();
+            tollFeeInfos = _dbContext.TollFees.ToList();
 
-            var tollFee = tollFeeInfo.FirstOrDefault(x => IsBetween(time, x.EventStart, x.EventEnd));
+            tollFee = tollFeeInfos.FirstOrDefault(x => IsBetween(time, x.EventStart, x.EventEnd));
             if (tollFee != null)
             {
-                CostType costType = _dbContext.CostTypes.FirstOrDefault(x =>x.Id == tollFee.CostTypeId);
+                costType = _dbContext.CostTypes.FirstOrDefault(x =>x.Id == tollFee.CostTypeId);
                 if (costType != null)
                 {
-                    int fee = costType.Cost;
-                    return fee;
+                    return costType.Cost;
                 }
             }
             return 0;
         }
         private bool IsTollFreeVehicle(VehicleType vehicle)
         {
-            List<VehicleType> vehicleType = _dbContext.VehicleTypes.ToList();
+            vehicleType = _dbContext.VehicleTypes.ToList();
             foreach(var item in vehicleType)
             {
                 if (item.Name.Equals(vehicle.Name))

@@ -16,7 +16,7 @@ namespace RuleService.APIProject.Controllers
             _tollFeeRepository = tollFeeRepository;
         }
         [HttpGet]
-        public async Task<object> Get()
+        public async Task<ServiceResponse> Get()
         {
             ServiceResponse response = new ServiceResponse();
             try
@@ -34,7 +34,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<object> GetById(int id)
+        public async Task<ServiceResponse> GetById(int id)
         {
             ServiceResponse response = new ServiceResponse();
             try
@@ -52,7 +52,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpPost]
-        public async Task<object> Post([FromBody] TollFeeDto newFee)
+        public async Task<ServiceResponse> Post([FromQuery] TollFeeDto newFee)
         {
             ServiceResponse response = new ServiceResponse();
             try
@@ -71,7 +71,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpPut]
-        public async Task<object> Put([FromBody] TollFeeDto newFee)
+        public async Task<ServiceResponse> Put([FromQuery] TollFeeDto newFee)
         {
             ServiceResponse response = new ServiceResponse();
             try
@@ -92,14 +92,12 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<object> Delete(int id)
+        public async Task<ServiceResponse> Delete(int id)
         {
             ServiceResponse response = new ServiceResponse();
             try
             {
-                var isSuccess = await _tollFeeRepository.Delete(id);
-                response.Data = isSuccess;
-
+                response.Success = await _tollFeeRepository.Delete(id);
             }
             catch (Exception ex)
             {
