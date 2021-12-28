@@ -14,6 +14,7 @@ namespace TollCalculatorService.APIPrpject.Controllers
         {
             _tollCalculator = tollCalculator;
         }
+
         [HttpGet]
         public ServiceResponse GetTollFee(string vehicle, [FromQuery] DateTime[] dates)
         {

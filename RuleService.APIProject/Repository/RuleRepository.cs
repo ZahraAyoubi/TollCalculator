@@ -16,6 +16,7 @@ namespace RuleService.APIProject.Repository
             _dbContext = dbContext;
             _mapper = mapper;
         }
+
         public async Task<TollFeeDto> Add(TollFeeDto newFee)
         {
             TollFee fee = _mapper.Map<TollFeeDto, TollFee>(newFee);

@@ -15,6 +15,7 @@ namespace RuleService.APIProject.Controllers
         {
             _tollFeeRepository = tollFeeRepository;
         }
+
         [HttpGet]
         public async Task<ServiceResponse> Get()
         {
@@ -39,8 +40,7 @@ namespace RuleService.APIProject.Controllers
             ServiceResponse response = new ServiceResponse();
             try
             {
-                var toDo = await _tollFeeRepository.GetById(id);
-                response.Data = toDo;
+                response.Data = await _tollFeeRepository.GetById(id);
             }
             catch (Exception ex)
             {
