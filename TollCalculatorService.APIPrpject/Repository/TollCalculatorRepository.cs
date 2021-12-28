@@ -10,11 +10,14 @@ namespace TollCalculatorService.APIPrpject.Repository
         private CostType costType;
         private List<TollFee> tollFeeInfos;
         private TollFee tollFee;
-        private List<VehicleType> vehicleType;
+        private List<VehicleType> vehicleTypes;
+        private TimeSpan time;
 
         public TollCalculatorRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+            tollFeeInfos = _dbContext.TollFees.ToList();
+            vehicleTypes = _dbContext.VehicleTypes.ToList();
         }
         public int GetTollFee(VehicleType vehicle, DateTime[] dates)
         {
@@ -46,8 +49,7 @@ namespace TollCalculatorService.APIPrpject.Repository
         {
             if (IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
 
-            var time = date.TimeOfDay;
-            tollFeeInfos = _dbContext.TollFees.ToList();
+            time = date.TimeOfDay;
 
             tollFee = tollFeeInfos.FirstOrDefault(x => IsBetween(time, x.EventStart, x.EventEnd));
             if (tollFee != null)
@@ -62,8 +64,7 @@ namespace TollCalculatorService.APIPrpject.Repository
         }
         private bool IsTollFreeVehicle(VehicleType vehicle)
         {
-            vehicleType = _dbContext.VehicleTypes.ToList();
-            foreach(var item in vehicleType)
+            foreach(var item in vehicleTypes)
             {
                 if (item.Name.Equals(vehicle.Name))
                     return item.IsTollFree;
