@@ -7,10 +7,7 @@ namespace TollCalculatorService.APIPrpject.Repository
     public class TollCalculatorRepository : ITollCalculatorRepository
     {
         private ApplicationDbContext _dbContext;
-        public TollCalculatorRepository()
-        {
 
-        }
         public TollCalculatorRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -84,17 +81,6 @@ namespace TollCalculatorService.APIPrpject.Repository
         private bool IsBetween(TimeSpan dateToCompare, TimeSpan start, TimeSpan end)
         {
             return dateToCompare >= start && dateToCompare <= end;
-        }
-
-        public List<string> GetVehicle()
-        {
-            List<string> vehicleNames=new List<string>();
-            var vehicle = _dbContext.VehicleTypes.ToList();
-            foreach(var item in vehicle)
-            {
-                vehicleNames.Add(item.Name);
-            }
-            return vehicleNames;
         }
     }
 }
