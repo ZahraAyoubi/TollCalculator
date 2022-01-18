@@ -17,98 +17,73 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpGet]
-        public async Task<ServiceResponse> Get()
+        public async Task<object> Get()
         {
-            ServiceResponse response = new ServiceResponse();
             try
             {
                 var list = await _tollFeeRepository.GetAll();
-                response.Data = list;
-                response.Success = true;
+                return Ok(list);
             }
             catch (Exception ex)
             {
-                response.Success = false;
-                response.ErrorMesseges
-                     = new List<string>() { ex.ToString() };
+                return BadRequest(ex.Message);
             }
-            return response;
         }
 
         [HttpGet("{id}")]
-        public async Task<ServiceResponse> GetById(int id)
+        public async Task<object> GetById(int id)
         {
-            ServiceResponse response = new ServiceResponse();
             try
             {
-                response.Data = await _tollFeeRepository.GetById(id);
-                response.Success = true;
+                var result = await _tollFeeRepository.GetById(id);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                response.Success = false;
-                response.ErrorMesseges
-                     = new List<string>() { ex.ToString() };
+                return BadRequest(ex.Message);
             }
-            return response;
         }
 
         [HttpPost]
-        public async Task<ServiceResponse> Post([FromQuery] TollFeeDto newFee)
+        public async Task<object> Post([FromQuery] TollFeeDto newFee)
         {
-            ServiceResponse response = new ServiceResponse();
-            try
+           try
             {
                 var model = await _tollFeeRepository.Add(newFee);
-                response.Data = model;
-                response.Success = true;
+                return Ok(model);
             }
             catch (Exception ex)
             {
-                response.Success = false;
-                response.ErrorMesseges
-                     = new List<string>() { ex.ToString() };
+                return BadRequest(ex.Message);
             }
-            return response;
         }
 
         [HttpPut]
-        public async Task<ServiceResponse> Put([FromQuery] TollFeeDto newFee)
+        public async Task<object> Put([FromQuery] TollFeeDto newFee)
         {
-            ServiceResponse response = new ServiceResponse();
             try
             {
                 var model = await _tollFeeRepository.Update(newFee);
-                if (model != null)
-                {
-                    response.Data = model;
-                    response.Success=true;
-                }
+                return Ok(model);
             }
             catch (Exception ex)
             {
-                response.Success = false;
-                response.ErrorMesseges
-                     = new List<string>() { ex.ToString() };
+                return BadRequest(ex.Message);
             }
-            return response;
         }
 
         [HttpDelete("{id}")]
-        public async Task<ServiceResponse> Delete(int id)
+        public async Task<object> Delete(int id)
         {
-            ServiceResponse response = new ServiceResponse();
             try
             {
-                response.Success = await _tollFeeRepository.Delete(id);
+                await _tollFeeRepository.Delete(id);
+                return Ok();
             }
             catch (Exception ex)
             {
-                response.Success = false;
-                response.ErrorMesseges
-                     = new List<string>() { ex.ToString() };
+                return BadRequest(ex.Message);
             }
-            return response;
         }
     }
 }

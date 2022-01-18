@@ -15,24 +15,18 @@ namespace TollCalculatorService.APIPrpject.Controllers
         {
             _tollCalculator = tollCalculator;
         }
-
         [HttpGet]
-        public ServiceResponse GetTollFee([FromQuery] Vehicles vehicle, [FromQuery] DateTime[] dates)
+        public object GetTollFee([FromQuery] Vehicles vehicle, [FromQuery] DateTime[] dates)
         {
-            ServiceResponse response = new ServiceResponse();
             try
             {
                 var result = _tollCalculator.GetTollFee(new VehicleType { Name = vehicle.ToString() }, dates);
-                response.Data = result;
-                response.Success = true;
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                response.Success = false;
-                response.ErrorMesseges
-                     = new List<string>() { ex.ToString() };
+                return BadRequest(ex.Message);
             }
-            return response;
         }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]

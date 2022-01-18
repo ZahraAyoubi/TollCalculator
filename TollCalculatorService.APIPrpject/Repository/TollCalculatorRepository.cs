@@ -16,7 +16,6 @@ namespace TollCalculatorService.APIPrpject.Repository
             tollFeeInfos = _dbContext.TollFees.ToList();
             vehicleTypes = _dbContext.VehicleTypes.ToList();
         }
-
         public int GetTollFee(VehicleType vehicle, DateTime[] dates)
         {
             DateTime intervalStart = dates[0];
@@ -43,7 +42,6 @@ namespace TollCalculatorService.APIPrpject.Repository
             if (totalFee > 60) totalFee = 60;
             return totalFee;
         }
-
         public int GetTollFee(DateTime date, VehicleType vehicle)
         {
             if (IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
@@ -61,7 +59,6 @@ namespace TollCalculatorService.APIPrpject.Repository
             }
             return 0;
         }
-
         private bool IsTollFreeVehicle(VehicleType vehicle)
         {
             foreach (var item in vehicleTypes)
@@ -71,7 +68,6 @@ namespace TollCalculatorService.APIPrpject.Repository
             }
             return false;
         }
-
         private bool IsHoliday(DateTime date)
         {
             return DateSystem.IsPublicHoliday(date, CountryCode.SE);
