@@ -6,17 +6,16 @@ using RuleService.APIProject.Models;
 
 namespace RuleService.APIProject.Repository
 {
-    public class RuleRepository : IRuleRepository
+    public class TollFeeRepository : ITollFeeRepository
     {
         private ApplicationDbContext _dbContext;
         private IMapper _mapper;
 
-        public RuleRepository(ApplicationDbContext dbContext, IMapper mapper)
+        public TollFeeRepository(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
-
         public async Task<TollFeeDto> Add(TollFeeDto newFee)
         {
             TollFee fee = _mapper.Map<TollFeeDto, TollFee>(newFee);
@@ -26,7 +25,6 @@ namespace RuleService.APIProject.Repository
 
             return _mapper.Map<TollFee, TollFeeDto>(fee);
         }
-
         public async Task<bool> Delete(int id)
         {
             try
@@ -37,7 +35,6 @@ namespace RuleService.APIProject.Repository
                 {
                     return false;
                 }
-
                 _dbContext.TollFees.Remove(fee);
                 await _dbContext.SaveChangesAsync();
 
@@ -48,33 +45,27 @@ namespace RuleService.APIProject.Repository
                 return false;
             }
         }
-
-        public async Task<IEnumerable<TollFeeDto>> GetAll()
+        public async Task<IEnumerable<TollFeeDto>> Get()
         {
             List<TollFee> fees = await _dbContext.TollFees.ToListAsync();
             return _mapper.Map<List<TollFeeDto>>(fees);
         }
-
-        public async Task<TollFeeDto> GetById(int id)
+        public async Task<TollFeeDto> Get(int id)
         {
             TollFee fee = await _dbContext.TollFees.FirstOrDefaultAsync(x => x.Id == id);
             return _mapper.Map<TollFeeDto>(fee);
         }
-
         public async Task<TollFeeDto> Update(TollFeeDto newFee)
         {
             TollFee fee = await _dbContext.TollFees.FirstOrDefaultAsync(x => x.Id == newFee.Id);
             try
             {
-
-
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 var exception = ex.ToString();
             }
-
             return _mapper.Map<TollFee, TollFeeDto>(fee);
         }
     }

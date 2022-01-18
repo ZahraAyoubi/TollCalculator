@@ -10,6 +10,8 @@ namespace RuleService.APIProject
         {
             CreateMap<TollFee, TollFeeDto>();
             CreateMap<TollFeeDto, TollFee>();
+            CreateMap<CostType, CostTypeDto>();
+            CreateMap<CostTypeDto, CostTypeDto>();
         }
     }
 }

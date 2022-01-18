@@ -16,8 +16,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(typeof(RuleRepository));
-builder.Services.AddScoped<IRuleRepository, RuleRepository>();
+builder.Services.AddAutoMapper(typeof(TollFeeRepository));
+builder.Services.AddScoped<ITollFeeRepository, TollFeeRepository>();
 
 var app = builder.Build();
 

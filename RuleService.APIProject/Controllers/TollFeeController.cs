@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RuleService.APIProject.DTOs;
-using RuleService.APIProject.Models;
 using RuleService.APIProject.Repository;
 
 namespace RuleService.APIProject.Controllers
 {
     [ApiController]
-    [Route("api/rule")]
-    public class RuleController : ControllerBase
+    [Route("api/fee")]
+    public class TollFeeController : ControllerBase
     {
-        private IRuleRepository _tollFeeRepository;
+        private ITollFeeRepository _tollFeeRepository;
 
-        public RuleController(IRuleRepository tollFeeRepository)
+        public TollFeeController(ITollFeeRepository tollFeeRepository)
         {
             _tollFeeRepository = tollFeeRepository;
         }
@@ -21,7 +20,7 @@ namespace RuleService.APIProject.Controllers
         {
             try
             {
-                var list = await _tollFeeRepository.GetAll();
+                var list = await _tollFeeRepository.Get();
                 return Ok(list);
             }
             catch (Exception ex)
@@ -35,7 +34,7 @@ namespace RuleService.APIProject.Controllers
         {
             try
             {
-                var result = await _tollFeeRepository.GetById(id);
+                var result = await _tollFeeRepository.Get(id);
                 return Ok(result);
             }
             catch (Exception ex)

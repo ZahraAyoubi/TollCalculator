@@ -2,10 +2,10 @@
 
 namespace RuleService.APIProject.Repository
 {
-    public interface IRuleRepository
+    public interface ITollFeeRepository
     {
-        Task<IEnumerable<TollFeeDto>> GetAll();
-        Task<TollFeeDto> GetById(int id);
+        Task<IEnumerable<TollFeeDto>> Get();
+        Task<TollFeeDto> Get(int id);
         Task<TollFeeDto> Add(TollFeeDto newFee);
         Task<TollFeeDto> Update(TollFeeDto newFee);
         Task<bool> Delete(int id);
