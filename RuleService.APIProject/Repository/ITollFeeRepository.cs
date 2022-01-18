@@ -8,6 +8,6 @@ namespace RuleService.APIProject.Repository
         Task<TollFeeDto> Get(int id);
         Task<TollFeeDto> Add(TollFeeDto newFee);
         Task<TollFeeDto> Update(TollFeeDto newFee);
-        Task<bool> Delete(int id);
+        Task Delete(int id);
     }
 }

@@ -8,6 +8,6 @@ namespace RuleService.APIProject.Repository
         Task<CostTypeDto> Get(int id);
         Task<CostTypeDto> Add(CostTypeDto model);
         Task<CostTypeDto> Update(CostTypeDto model);
-        Task<bool> Delete(int id);
+        Task Delete(int id);
     }
 }

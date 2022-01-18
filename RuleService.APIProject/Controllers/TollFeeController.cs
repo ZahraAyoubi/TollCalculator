@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RuleService.APIProject.DTOs;
+using RuleService.APIProject.Models;
 using RuleService.APIProject.Repository;
 
 namespace RuleService.APIProject.Controllers
@@ -16,7 +17,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpGet]
-        public async Task<object> Get()
+        public async Task<ActionResult<IEnumerable<TollFee>>> Get()
         {
             try
             {
@@ -30,7 +31,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<object> GetById(int id)
+        public async Task<ActionResult<TollFee>> GetById(int id)
         {
             try
             {
@@ -44,7 +45,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpPost]
-        public async Task<object> Post([FromQuery] TollFeeDto newFee)
+        public async Task<ActionResult<TollFee>> Post([FromQuery] TollFeeDto newFee)
         {
            try
             {
@@ -58,7 +59,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpPut]
-        public async Task<object> Put([FromQuery] TollFeeDto newFee)
+        public async Task<ActionResult<TollFee>> Put([FromQuery] TollFeeDto newFee)
         {
             try
             {
@@ -72,16 +73,15 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<object> Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
                 await _tollFeeRepository.Delete(id);
-                return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                BadRequest(ex.Message);
             }
         }
     }

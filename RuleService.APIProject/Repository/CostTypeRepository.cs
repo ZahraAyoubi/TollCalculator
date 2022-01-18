@@ -25,17 +25,11 @@ namespace RuleService.APIProject.Repository
             return _mapper.Map<CostType,CostTypeDto>(costType);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task Delete(int id)
         {
             costType = await _dbContext.CostTypes.FirstAsync(x => x.Id == id);
-            
-            if (costType != null)
-            {
-                _dbContext.CostTypes.Remove(costType);
-                await _dbContext.SaveChangesAsync();
-                return true;
-            }
-            return false;
+            _dbContext.CostTypes.Remove(costType);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<CostTypeDto>> Get()
@@ -55,6 +49,7 @@ namespace RuleService.APIProject.Repository
             costType = await _dbContext.CostTypes.FirstOrDefaultAsync(x => x.Id == model.Id);
             try
             {
+                costType.Cost = model.Cost;
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RuleService.APIProject.DTOs;
+using RuleService.APIProject.Models;
 using RuleService.APIProject.Repository;
 
 namespace RuleService.APIProject.Controllers
@@ -16,7 +17,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpGet]
-        public async Task<object> Get()
+        public async Task<ActionResult<IEnumerable<CostType>>> Get()
         {
             try
             {
@@ -30,7 +31,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<object> GetById(int id)
+        public async Task<ActionResult<CostType>> GetById(int id)
         {
             try
             {
@@ -44,7 +45,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpPost]
-        public async Task<object> Post([FromQuery] CostTypeDto newCost)
+        public async Task<ActionResult<CostType>> Post([FromQuery] CostTypeDto newCost)
         {
             try
             {
@@ -58,7 +59,7 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpPut]
-        public async Task<object> Put([FromQuery] CostTypeDto newCost)
+        public async Task<ActionResult<CostType>> Put([FromQuery] CostTypeDto newCost)
         {
             try
             {
@@ -72,16 +73,15 @@ namespace RuleService.APIProject.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<object> Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
                 await _costTypeRepository.Delete(id);
-                return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                BadRequest(ex.Message);
             }
         }
     }

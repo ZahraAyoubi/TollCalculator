@@ -19,6 +19,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(TollFeeRepository));
 builder.Services.AddScoped<ITollFeeRepository, TollFeeRepository>();
 
+builder.Services.AddAutoMapper(typeof(CostTypeRepository));
+builder.Services.AddScoped<ICostTypeRepository, CostTypeRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

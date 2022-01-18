@@ -25,25 +25,11 @@ namespace RuleService.APIProject.Repository
 
             return _mapper.Map<TollFee, TollFeeDto>(fee);
         }
-        public async Task<bool> Delete(int id)
+        public async Task Delete(int id)
         {
-            try
-            {
-                var fee = await _dbContext.TollFees.FirstAsync(x => x.Id == id);
-
-                if (fee == null)
-                {
-                    return false;
-                }
-                _dbContext.TollFees.Remove(fee);
-                await _dbContext.SaveChangesAsync();
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            var fee = await _dbContext.TollFees.FirstAsync(x => x.Id == id);
+            _dbContext.TollFees.Remove(fee);
+            await _dbContext.SaveChangesAsync();
         }
         public async Task<IEnumerable<TollFeeDto>> Get()
         {
@@ -60,6 +46,10 @@ namespace RuleService.APIProject.Repository
             TollFee fee = await _dbContext.TollFees.FirstOrDefaultAsync(x => x.Id == newFee.Id);
             try
             {
+                fee.City = newFee.City;
+                fee.EventStart = newFee.EventStart;
+                fee.EventEnd = newFee.EventEnd;
+                fee.CostTypeId = newFee.CostTypeId;
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
